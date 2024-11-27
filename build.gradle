@@ -5,18 +5,18 @@
 buildscript {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
         mavenLocal()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.5.0'
+        classpath 'com.android.tools.build:gradle:7.4.2'
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
+        mavenCentral()
     }
 }
 
@@ -62,7 +62,7 @@ project.ext {
     }
 
     // Also update in com.google.play.games/package.json
-    pluginVersion = "0.11.01"
+    pluginVersion = "2.0.0"
 
     // String for specifying the build mode.
     // If 'eap', will include all files from the 'Protected' folder.
@@ -136,7 +136,7 @@ project.ext {
     jarresolver_repos = [
       'https://github.com/googlesamples/unity-jar-resolver.git'
     ]
-    jarresolver_tag = null;
+    jarresolver_tag = 'v1.2.182';
 }
 
 if (!tasks.findByName('prebuild')) {
@@ -437,7 +437,7 @@ task generate_dependency_xml() {
     xmlFile << '    <androidPackage spec="com.google.games:gpgs-plugin-support:'
     xmlFile << "${currentPluginVersion}\">\n"
     xmlFile << '      <repositories>\n'
-    xmlFile << '        <repository>Packages/com.google.play.games/Editor/m2repository</repository>\n'
+    xmlFile << '        <repository>Assets/GooglePlayGames/com.google.play.games/Editor/m2repository</repository>\n'
     xmlFile << '      </repositories>\n'
     xmlFile << '    </androidPackage>\n'
     xmlFile << '  </androidPackages>\n'
@@ -700,7 +700,7 @@ task build_java_support_lib(type: GradleBuild) {
     startParameter.projectProperties.put('projVersion',currentPluginVersion)
     startParameter.projectProperties.put('uploadDir', "${project.ext.buildPath}/m2repository")
 
-    tasks = ['build', 'uploadArchives']
+    tasks = ['build', 'publish']
 }
 
 build_java_support_lib.ext.remoteTaskPhase = 'prebuild'
