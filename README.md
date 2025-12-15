@@ -53,29 +53,6 @@ If you have already integrated your project with a previous version of the
 plugin and wish to upgrade to a new version, please refer to the
 [upgrade instructions](UPGRADING.txt).
 
-## Retrieving server authentication codes ##
-In order to access Google APIs on a backend web server on behalf of the current
-player, you need to get an authentication code from the client application and
-pass this to your web server application.  This code can then be exchanged for
-an access token to make calls to the various APIs.
-For more details on this flow see: [Google Sign-In for Websites](https://developers.google.com/identity/sign-in/web/server-side-flow).
-
-To get the Server Auth code:
-1. Configure the web client Id of the web application linked to your game in the
-   Play Game Console.
-2. Call `PlayGamesClientConfiguration.Builder.RequestServerAuthCode(false)` when
-   creating the configuration.
-3. Call `PlayGamesPlatform.Instance.GetServerAuthCode()` once the player is authenticated.
-4. Pass this code to your server application.
-
-```csharp
-  PlayGamesPlatform.Instance.RequestServerSideAccess(
-    /* forceRefreshToken= */ false,
-    code -> {
-      // send code to server
-    });
-```
-
 ## Decreasing apk size
 
 It is possible to decrease the size of the Play Games Services Unity Plugin by removing code for the Play Games Services features that your game doesn’t use by using Proguard. Proguard will remove the Play Games Unity plugin code for features that are not used in your game, so your game ships with only the code that is needed and minimizes the size impact of using Play Games Services.
