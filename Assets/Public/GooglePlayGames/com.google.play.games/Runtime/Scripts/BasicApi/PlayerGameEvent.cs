@@ -144,6 +144,24 @@ namespace GooglePlayGames.BasicApi
                 return this;
             }
 
+            public Builder AddProperty(string key, TimeSpan value)
+            {
+                lock (lockObject)
+                {
+                    CheckKey(key);
+                    if (eventProperties.Count >= MaxProperties && !eventProperties.ContainsKey(key))
+                    {
+                        throw new InvalidOperationException($"Cannot add more than {MaxProperties} properties.");
+                    }
+                    if (value < TimeSpan.Zero)
+                    {
+                        throw new ArgumentException("Duration value cannot be negative.");
+                    }
+                    eventProperties[key] = value;
+                }
+                return this;
+            }
+
             public PlayerGameEvent Build()
             {
                 lock (lockObject)

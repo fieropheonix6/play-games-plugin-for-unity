@@ -16,10 +16,11 @@
 
 namespace SmokeTest
 {
+    using System;
+    using System.Collections.Generic;
     using UnityEngine;
     using GooglePlayGames;
     using GooglePlayGames.BasicApi;
-    using System.Collections.Generic;
 
     public class PlayerGameEventsGUI : MonoBehaviour
     {
@@ -83,6 +84,7 @@ namespace SmokeTest
             SetStandBy("Recording single event...");
             PlayerGameEvent playerGameEvent = new PlayerGameEvent.Builder("test_event")
                 .AddProperty("prop1", 123L)
+                .AddProperty("prop_duration", TimeSpan.FromMinutes(5))
                 .Build();
             PlayGamesPlatform.Instance.RecordEvent(playerGameEvent);
             mStatus = "Called RecordEvent";

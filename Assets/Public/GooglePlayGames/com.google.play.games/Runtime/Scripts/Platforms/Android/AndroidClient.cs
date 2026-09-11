@@ -1168,6 +1168,16 @@ namespace GooglePlayGames.Android
                     {
                         chainedResult = eventBuilder.Call<AndroidJavaObject>("addProperty", key, boolValue);
                     }
+                    else if (value is TimeSpan timeSpanValue)
+                    {
+                        long seconds = timeSpanValue.Ticks / 10000000L;
+                        int nanos = (int)((timeSpanValue.Ticks % 10000000L) * 100);
+                        using (var playDuration = new AndroidJavaObject(
+                            "com.google.android.gms.games.playergameevent.PlayDuration", seconds, nanos))
+                        {
+                            chainedResult = eventBuilder.Call<AndroidJavaObject>("addProperty", key, playDuration);
+                        }
+                    }
                     else
                     {
                         OurUtils.Logger.w("Unsupported property type in PlayerGameEvent: " + value.GetType());
